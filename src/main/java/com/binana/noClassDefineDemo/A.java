@@ -1,4 +1,7 @@
 package com.binana.noClassDefineDemo;
-public class SimpleCalculator {
+/**
+ * 成员变量初始化异常
+ */
+public class A {
     static int undefined = 1 / 0;
 }
