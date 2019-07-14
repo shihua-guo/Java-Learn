@@ -1,10 +1,8 @@
 package com.binana.classLoad;
 import static com.binana.classLoad.Println.println;
-import com.binana.classLoad.FakeClass;
 public class Instance extends Abstract{
     static {
         println("实例类Instance构造器前的静态代码块");
-        FakeClass.test("test");
     }
     {
         println("实例类Instance构造器前的代码块");
