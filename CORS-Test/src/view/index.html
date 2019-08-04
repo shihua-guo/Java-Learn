@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>Title</title>
+    <script type="text/javascript" src="/utils/jquery.js"></script>
+</head>
+<script type="text/javascript">
+    var log = function(msg){console.log(`----------------------${msg}---------------------------`)};
+    log("不带预检的get请求");
+    $.ajax({
+        type:"GET",
+        url:"http://localhost:3001/data",
+        data:{},
+        dataType:"json",
+        success:function(data,status){
+            log("get请求结果");
+            console.log(data,status)
+        }
+    }); 
+    log("带预检的post请求");
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:3001/data",
+        contentType:"application/json",
+        data:{},
+        dataType:"json",
+        success:function(data,status){
+            log("post请求结果");
+            console.log(data,status)
+        }
+    }); 
+    document.cookie="name=sss;path=/;domain=http://baidu.com";
+    log("CORS post请求");
+    $.ajax({
+        type:"POST",
+        url:"http://localhost:3002/data",
+        contentType:"application/json",
+        headers:{
+            "Access-Control-Allow-Credentials":true
+        },
+        xhrFields: {
+            withCredentials: true
+        },
+        data:{},
+        dataType:"json",
+        success:function(data,status){
+            log("post请求结果");
+            console.log(data,status)
+        }
+    }); 
+
+</script>
+
+<body>
+    <h1>Hello World！</h1>
+</body>
+
+</html>

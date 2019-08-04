@@ -1,0 +1,16 @@
+{
+  "name": "node-ddns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "client":"node app.js",
+    "block":"node app-block.js",
+    "cors":"node app-cors.js"
+  },
+  "author": "alan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
