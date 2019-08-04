@@ -60,6 +60,17 @@
                         }
                     }); 
                     break;
+                case "getWithCORSBtn":
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:3002/data",
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status);
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
                 case "postWithCORSBtn":
                     $.ajax({
                         type:"POST",
@@ -72,10 +83,32 @@
                         }
                     }); 
                     break;
-                case "getWithCORSBtn":
+                case "postWithCORSHeadersBtn":
                     $.ajax({
-                        type:"GET",
+                        type:"POST",
                         url:"http://localhost:3002/data",
+                        contentType:"application/json",
+                        headers:{
+                            "token":"test"
+                        },
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status);
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+                case "postWithCORSMethodsBtn":
+                    $.ajax({
+                        type:"PUT",
+                        url:"http://localhost:3002/data",
+                        contentType:"application/json",
+                        headers:{
+                            token:"test"
+                        },
+                        data:{
+                            name:"alan"
+                        },
                         dataType:"json",
                         success:function(data,status){
                             console.log(data,status);
@@ -92,6 +125,9 @@
 
 <body>
     <h2>以下是几个实例，请注意观察network面板已经console面板的信息</h1>
+    <div style="background-color:#38ffa559; text-align:center; vertical-align: middle; padding:10px 0;">
+        <strong>访问没有设置允许跨域的服务端</strong>
+    </div>
     <div id="getWithoutPreCheck">
         <h4>get的跨域请求(服务端不允许跨域；结果没有打印；响应之后的脚本被拦截了；但是能够看到network的响应)</h4>
         <textarea readonly="readonly" class="txt">
@@ -158,6 +194,9 @@
         <textarea class="result-txt" readonly="readonly" id="postWithPreCheckResult"></textarea>
         <button id="postWithPreCheckBtn" class="send">发送</button>
     </div>
+    <div style="background-color:#38ffa559; text-align:center; vertical-align: middle; padding:10px 0;">
+        <strong>访问允许跨域的服务端</strong>
+    </div>
     <div id="postWithCORS">
         <h4>会发起option预检的post的跨域请求（没有被拦截）</h4>
         <textarea readonly="readonly" class="txt">
@@ -175,6 +214,7 @@
         <textarea class="result-txt" readonly="readonly" id="postWithCORSResult"></textarea>
         <button id="postWithCORSBtn" class="send">发送</button>
     </div>
+    
     <div id="getWithCORS">
         <h4>get的跨域请求（没有被拦截）</h4>
         <textarea readonly="readonly" class="txt">
@@ -190,6 +230,49 @@
         </textarea>
         <textarea class="result-txt" readonly="readonly" id="getWithCORSResult"></textarea>
         <button id="getWithCORSBtn" class="send">发送</button>
+    </div>
+    <div id="postWithCORSHeaders">
+        <h4>post的跨域请求（header在跨域范围外；预检无法通过）</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"POST",
+                url:"http://localhost:3002/data",
+                contentType:"application/json",
+                headers:{
+                    token:"test"
+                },
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status);
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="postWithCORSHeadersResult"></textarea>
+        <button id="postWithCORSHeadersBtn" class="send">发送</button>
+    </div>
+    <div id="postWithCORSMethods">
+        <h4>put的跨域请求（method在跨域范围外；预检无法通过）</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"PUT",
+                url:"http://localhost:3002/data",
+                contentType:"application/json",
+                headers:{
+                    token:"test"
+                },
+                data:{
+                    name:"alan"
+                },
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status);
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="postWithCORSMethodsResult"></textarea>
+        <button id="postWithCORSMethodsBtn" class="send">发送</button>
     </div>
 </body>
 
