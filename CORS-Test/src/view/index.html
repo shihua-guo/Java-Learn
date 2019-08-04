@@ -9,54 +9,198 @@
     <script type="text/javascript" src="/utils/jquery.js"></script>
 </head>
 <script type="text/javascript">
-    var log = function(msg){console.log(`----------------------${msg}---------------------------`)};
-    log("不带预检的get请求");
-    $.ajax({
-        type:"GET",
-        url:"http://localhost:3001/data",
-        data:{},
-        dataType:"json",
-        success:function(data,status){
-            log("get请求结果");
-            console.log(data,status)
-        }
-    }); 
-    log("带预检的post请求");
-    $.ajax({
-        type:"POST",
-        url:"http://localhost:3001/data",
-        contentType:"application/json",
-        data:{},
-        dataType:"json",
-        success:function(data,status){
-            log("post请求结果");
-            console.log(data,status)
-        }
-    }); 
-    document.cookie="name=sss;path=/;domain=http://baidu.com";
-    log("CORS post请求");
-    $.ajax({
-        type:"POST",
-        url:"http://localhost:3002/data",
-        contentType:"application/json",
-        headers:{
-            "Access-Control-Allow-Credentials":true
-        },
-        xhrFields: {
-            withCredentials: true
-        },
-        data:{},
-        dataType:"json",
-        success:function(data,status){
-            log("post请求结果");
-            console.log(data,status)
-        }
-    }); 
+    $(function(){
+
+        $(".send").click(function(){
+            var id = this.id;
+            var oriId = id.substr(0,id.length-3);
+            switch(id){
+                case "getWithoutPreCheckBtn":
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:3001/data",
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status)
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+                case "getWithPreCheckBtn":
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:3001/data",
+                        contentType:"application/json",
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status)
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+                case "postWithoutPreCheckBtn":
+                    $.ajax({
+                        type:"POST",
+                        url:"http://localhost:3001/data",
+                        success:function(data,status){
+                            console.log(data,status);
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+                case "postWithPreCheckBtn":
+                    $.ajax({
+                        type:"POST",
+                        url:"http://localhost:3001/data",
+                        contentType:"application/json",
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status);
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+                case "postWithCORSBtn":
+                    $.ajax({
+                        type:"POST",
+                        url:"http://localhost:3002/data",
+                        contentType:"application/json",
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status);
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+                case "getWithCORSBtn":
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:3002/data",
+                        dataType:"json",
+                        success:function(data,status){
+                            console.log(data,status);
+                            $(`#${oriId}Result`).val(JSON.stringify(data));
+                        }
+                    }); 
+                    break;
+    
+            }
+        });
+    });
 
 </script>
 
 <body>
-    <h1>Hello World！</h1>
+    <h2>以下是几个实例，请注意观察network面板已经console面板的信息</h1>
+    <div id="getWithoutPreCheck">
+        <h4>get的跨域请求(服务端不允许跨域；结果没有打印；响应之后的脚本被拦截了；但是能够看到network的响应)</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:3001/data",
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status)
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="getWithoutPreCheckResult"></textarea>
+        <button id="getWithoutPreCheckBtn" class="send">发送</button>
+    </div>
+    <div id="getWithPreCheck">
+        <h4>get的跨域请求(服务端不允许跨域；结果没有打印；发起预检请求；预检没有通过，无法发起本次get请求)</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:3001/data",
+                contentType:"application/json",
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status)
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="getWithPreCheckResult"></textarea>
+        <button id="getWithPreCheckBtn" class="send">发送</button>
+    </div>
+    <div id="postWithoutPreCheckBtn">
+        <h4>不会发起option预检的post的跨域请求（服务端不允许跨域，被拦截；）</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"POST",
+                url:"http://localhost:3001/data",
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status);
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="postWithPreCheckResult"></textarea>
+        <button id="postWithPreCheckBtn" class="send">发送</button>
+    </div>
+    <div id="postWithPreCheck">
+        <h4>会发起option预检的post的跨域请求（content-type:application/json,服务端不允许跨域，被拦截）</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"POST",
+                url:"http://localhost:3001/data",
+                contentType:"application/json",
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status);
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="postWithPreCheckResult"></textarea>
+        <button id="postWithPreCheckBtn" class="send">发送</button>
+    </div>
+    <div id="postWithCORS">
+        <h4>会发起option预检的post的跨域请求（没有被拦截）</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"POST",
+                url:"http://localhost:3002/data",
+                contentType:"application/json",
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status);
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="postWithCORSResult"></textarea>
+        <button id="postWithCORSBtn" class="send">发送</button>
+    </div>
+    <div id="getWithCORS">
+        <h4>get的跨域请求（没有被拦截）</h4>
+        <textarea readonly="readonly" class="txt">
+            $.ajax({
+                type:"GET",
+                url:"http://localhost:3002/data",
+                dataType:"json",
+                success:function(data,status){
+                    console.log(data,status);
+                    $(`#${oriId}Result`).val(JSON.stringify(data));
+                }
+            }); 
+        </textarea>
+        <textarea class="result-txt" readonly="readonly" id="getWithCORSResult"></textarea>
+        <button id="getWithCORSBtn" class="send">发送</button>
+    </div>
 </body>
 
 </html>
+<style>
+    .txt{
+        width: 370px;
+        height: 172px;
+    }
+    .result-txt{
+        width: 170px;
+        height: 172px;
+    }
+</style>
