@@ -18,7 +18,7 @@
                 case "getWithoutPreCheckBtn":
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:3001/data",
+                        url:"http://111.230.165.16:3001/data",
                         dataType:"json",
                         success:function(data,status){
                             console.log(data,status)
@@ -29,7 +29,7 @@
                 case "getWithPreCheckBtn":
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:3001/data",
+                        url:"http://111.230.165.16:3001/data",
                         contentType:"application/json",
                         dataType:"json",
                         success:function(data,status){
@@ -41,7 +41,7 @@
                 case "postWithoutPreCheckBtn":
                     $.ajax({
                         type:"POST",
-                        url:"http://localhost:3001/data",
+                        url:"http://111.230.165.16:3001/data",
                         success:function(data,status){
                             console.log(data,status);
                             $(`#${oriId}Result`).val(JSON.stringify(data));
@@ -51,7 +51,7 @@
                 case "postWithPreCheckBtn":
                     $.ajax({
                         type:"POST",
-                        url:"http://localhost:3001/data",
+                        url:"http://111.230.165.16:3001/data",
                         contentType:"application/json",
                         dataType:"json",
                         success:function(data,status){
@@ -63,7 +63,7 @@
                 case "getWithCORSBtn":
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:3002/data",
+                        url:"http://111.230.165.16:3002/data",
                         dataType:"json",
                         success:function(data,status){
                             console.log(data,status);
@@ -74,7 +74,7 @@
                 case "postWithCORSBtn":
                     $.ajax({
                         type:"POST",
-                        url:"http://localhost:3002/data",
+                        url:"http://111.230.165.16:3002/data",
                         contentType:"application/json",
                         dataType:"json",
                         success:function(data,status){
@@ -86,7 +86,7 @@
                 case "postWithCORSHeadersBtn":
                     $.ajax({
                         type:"POST",
-                        url:"http://localhost:3002/data",
+                        url:"http://111.230.165.16:3002/data",
                         contentType:"application/json",
                         headers:{
                             "token":"test"
@@ -101,7 +101,7 @@
                 case "postWithCORSMethodsBtn":
                     $.ajax({
                         type:"PUT",
-                        url:"http://localhost:3002/data",
+                        url:"http://111.230.165.16:3002/data",
                         contentType:"application/json",
                         headers:{
                             token:"test"
@@ -133,7 +133,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"GET",
-                url:"http://localhost:3001/data",
+                url:"http://111.230.165.16:3001/data",
                 dataType:"json",
                 success:function(data,status){
                     console.log(data,status)
@@ -149,7 +149,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"GET",
-                url:"http://localhost:3001/data",
+                url:"http://111.230.165.16:3001/data",
                 contentType:"application/json",
                 dataType:"json",
                 success:function(data,status){
@@ -166,7 +166,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"POST",
-                url:"http://localhost:3001/data",
+                url:"http://111.230.165.16:3001/data",
                 dataType:"json",
                 success:function(data,status){
                     console.log(data,status);
@@ -182,7 +182,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"POST",
-                url:"http://localhost:3001/data",
+                url:"http://111.230.165.16:3001/data",
                 contentType:"application/json",
                 dataType:"json",
                 success:function(data,status){
@@ -202,7 +202,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"POST",
-                url:"http://localhost:3002/data",
+                url:"http://111.230.165.16:3002/data",
                 contentType:"application/json",
                 dataType:"json",
                 success:function(data,status){
@@ -220,7 +220,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"GET",
-                url:"http://localhost:3002/data",
+                url:"http://111.230.165.16:3002/data",
                 dataType:"json",
                 success:function(data,status){
                     console.log(data,status);
@@ -236,7 +236,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"POST",
-                url:"http://localhost:3002/data",
+                url:"http://111.230.165.16:3002/data",
                 contentType:"application/json",
                 headers:{
                     token:"test"
@@ -256,7 +256,7 @@
         <textarea readonly="readonly" class="txt">
             $.ajax({
                 type:"PUT",
-                url:"http://localhost:3002/data",
+                url:"http://111.230.165.16:3002/data",
                 contentType:"application/json",
                 headers:{
                     token:"test"
